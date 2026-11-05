@@ -7,7 +7,7 @@
 // some helper functions existing in libnfc.
 // Those functions are not available yet in a library
 // so binary object must be linked statically:
-// $ gcc -o quick_start_example2 -lnfc -I../.. quick_start_example2.c ../../utils/nfc-utils.o
+// $ gcc -o quick_start_example2 -I../.. quick_start_example2.c ../../utils/nfc-utils.o $(pkg-config --cflags --libs libnfc-ng)
 
 #ifdef HAVE_CONFIG_H
 #  include "config.h"

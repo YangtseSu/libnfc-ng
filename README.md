@@ -50,23 +50,40 @@ Building
 ========
 
 Note: If working directly from a git clone of the repository, some of the files need to be generated first. To do this run
-`autoreconf -vis`
+`autoreconf -fi`
 
-Alternatively use a .tar.bz2 version of a packaged release (which already contains ./configure):
-https://github.com/nfc-tools/libnfc/releases/
+This fork installs a distinct library identity so it can coexist with the
+upstream `libnfc` package:
 
-The build should be as simple as running these commands:
+    /usr/lib/libnfcng.so.6
+    /usr/include/libnfc-ng/nfc/
+    /usr/lib/pkgconfig/libnfc-ng.pc
 
-    ./configure
+The normal library build is:
+
+    ./configure --prefix=/usr --disable-conffiles --enable-envvars
     make
+    make install
 
+`--disable-conffiles` avoids `/etc/nfc`; device selection stays available
+through `LIBNFC_DEVICE` and the other environment variables below.
+
+The upstream command-line utilities and examples are diagnostic-only. They are
+not built or installed by default:
+
+    ./configure --enable-utils --enable-example
 
 To build with specific driver(s), see option `--with-drivers=...` detailed in `./configure --help`.
+The default driver set is unchanged from upstream; consumers that need a
+smaller profile must pass it explicitly.
 
 Installation
 ============
-    
-    make install
+
+`make install` installs the shared library, the public headers and
+`libnfc-ng.pc` only. Compile a consumer with:
+
+    cc example.c $(pkg-config --cflags --libs libnfc-ng)
 
 You may need to grant permissions to your user to drive your device.
 Under GNU/Linux systems, if you use udev, you could use the provided udev rules.

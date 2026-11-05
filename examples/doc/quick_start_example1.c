@@ -4,7 +4,7 @@
  */
 
 // To compile this simple example:
-// $ gcc -o quick_start_example1 quick_start_example1.c -lnfc
+// $ gcc -o quick_start_example1 quick_start_example1.c $(pkg-config --cflags --libs libnfc-ng)
 
 #include <stdlib.h>
 #include <nfc/nfc.h>

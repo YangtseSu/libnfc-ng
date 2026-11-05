@@ -1,7 +1,7 @@
 # General init
 
 # /!\ Don't forget to update 'CMakeLists.txt' too /!\
-AC_INIT([libnfc],[1.8.0],[nfc-tools@googlegroups.com])
+AC_INIT([libnfc-ng],[1.8.0],[https://github.com/YangtseSu/libnfc-ng/issues])
 
 AC_CONFIG_MACRO_DIR([m4])
 
@@ -157,12 +157,24 @@ then
 fi
 AM_CONDITIONAL(DOC_ENABLED, [test x"$enable_doc" = xyes])
 
-# Example build (default: yes)
-AC_ARG_ENABLE([example],AS_HELP_STRING([--enable-example],[Enable example build.]),[enable_example=$enableval],[enable_example="yes"])
+# Utility build (default: no; diagnostic only, never installed)
+AC_ARG_ENABLE([utils],AS_HELP_STRING([--enable-utils],[Build upstream command-line utilities for diagnostics (not installed).]),[enable_utils=$enableval],[enable_utils="no"])
+
+# Example build (default: no; diagnostic only, never installed)
+AC_ARG_ENABLE([example],AS_HELP_STRING([--enable-example],[Build upstream examples for diagnostics (not installed).]),[enable_example=$enableval],[enable_example="no"])
+
+if test x"$enable_example" = x"yes" -a x"$enable_utils" = x"no"; then
+  enable_utils="yes"
+  AC_MSG_NOTICE([examples use the utility helper library; enabling the utility build])
+fi
+
+AC_MSG_CHECKING(for utility build)
+AC_MSG_RESULT($enable_utils)
 
 AC_MSG_CHECKING(for example build)
 AC_MSG_RESULT($enable_example)
 
+AM_CONDITIONAL(UTILS_ENABLED, [test x"$enable_utils" = xyes])
 AM_CONDITIONAL(EXAMPLE_ENABLED, [test x"$enable_example" = xyes])
 
 # Dependencies
@@ -215,7 +227,7 @@ AC_CONFIG_FILES([
 		examples/pn53x-tamashell-scripts/Makefile
 		include/Makefile
 		include/nfc/Makefile
-		libnfc.pc
+		libnfc-ng.pc
 		libnfc/Makefile
 		libnfc/buses/Makefile
 		libnfc/chips/Makefile

@@ -40,7 +40,7 @@ examples/pn53x-tamashell
 examples/quick_start_example1
 examples/quick_start_example2
 install-sh
-libnfc.pc
+libnfc-ng.pc
 libtool
 ltmain.sh
 m4/libtool.m4

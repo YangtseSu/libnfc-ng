@@ -1,0 +1,33 @@
+version = 1
+
+# The library, headers, tests, build system, packaging metadata and general
+# documentation keep the upstream LGPL-3.0-or-later license. More specific
+# annotations below override this entry; the REUSE specification resolves
+# annotations with the closest path first.
+[[annotations]]
+path = ["**"]
+precedence = "closest"
+SPDX-FileCopyrightText = "2009-2026 the libnfc contributors"
+SPDX-License-Identifier = "LGPL-3.0-or-later"
+
+# Upstream utility and example programs are BSD-2-Clause. Their manual pages
+# contain the LGPL notice, so they are intentionally not included here.
+[[annotations]]
+path = ["utils/*.c", "utils/*.h", "examples/*.c"]
+precedence = "closest"
+SPDX-FileCopyrightText = "2009-2026 the libnfc contributors"
+SPDX-License-Identifier = "BSD-2-Clause"
+
+# Regents' 4-clause getopt implementation retained for Windows builds.
+[[annotations]]
+path = ["contrib/win32/getopt.c"]
+precedence = "closest"
+SPDX-FileCopyrightText = "1987, 1993, 1994 The Regents of the University of California"
+SPDX-License-Identifier = "BSD-4-Clause"
+
+# CMake modules carry the CMake scripts license.
+[[annotations]]
+path = ["cmake/modules/**"]
+precedence = "closest"
+SPDX-FileCopyrightText = "2002-2009 Kitware, Inc."
+SPDX-License-Identifier = "BSD-3-Clause"

@@ -45,7 +45,7 @@
  *	Licence : https://creativecommons.org/licenses/by/4.0/
  *	Rely on : libnfc - https://github.com/nfc-tools/libnfc
  *	
- *	$ gcc -Wall -lnfc -o nfc-st25tb nfc-st25tb.c
+ *	$ gcc -Wall -o nfc-st25tb nfc-st25tb.c $(pkg-config --cflags --libs libnfc-ng)
  *	$ ./nfc-st25tb -h
  *
  * Tested with

@@ -2,7 +2,11 @@ ACLOCAL_AMFLAGS = -I m4
 
 AM_CFLAGS = $(LIBNFC_CFLAGS)
 
-SUBDIRS = libnfc utils
+SUBDIRS = libnfc
+
+if UTILS_ENABLED
+SUBDIRS += utils
+endif
 
 if EXAMPLE_ENABLED
 SUBDIRS += examples
@@ -11,19 +15,25 @@ endif
 SUBDIRS += include contrib cmake test
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = libnfc.pc
+pkgconfig_DATA = libnfc-ng.pc
 
 EXTRA_DIST = \
 	CMakeLists.txt \
 	Doxyfile \
+	FORK.md \
 	HACKING.md \
+	LICENSES/BSD-2-Clause.txt \
+	LICENSES/BSD-3-Clause.txt \
+	LICENSES/BSD-4-Clause.txt \
+	LICENSES/LGPL-3.0-or-later.txt \
 	NEWS.md \
 	README.md \
 	README-Windows.md \
+	REUSE.toml \
 	libnfc.conf.sample \
 	mingw-cross-compile.sh
 
-CLEANFILES = Doxygen.log coverage.info libnfc.pc
+CLEANFILES = Doxygen.log coverage.info libnfc-ng.pc
 
 clean-local: clean-local-doc clean-local-coverage
 

@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libnfc-ng
+Description: Near Field Communication (NFC) library used by NFC Foundry
+Version: @VERSION@
+Requires: @PKG_CONFIG_REQUIRES@
+Libs: -L${libdir} -lnfcng
+Cflags: -I${includedir}/libnfc-ng

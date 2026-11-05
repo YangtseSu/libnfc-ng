@@ -4,7 +4,7 @@ if (NOT DEFINED CMAKE_BUILD_TYPE)
   set (CMAKE_BUILD_TYPE Release CACHE STRING "Build type")
 endif ()
 
-project (libnfc C)
+project (libnfc-ng C)
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "8")
@@ -12,7 +12,7 @@ SET(VERSION_PATCH "0")
 
 SET(VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
 
-SET(PACKAGE_NAME "libnfc")
+SET(PACKAGE_NAME "libnfc-ng")
 SET(PACKAGE_VERSION ${VERSION})
 SET(PACKAGE_STRING "${PACKAGE_NAME} ${PACKAGE_VERSION}")
 
@@ -64,8 +64,8 @@ IF(LIBNFC_CONFFILES_MODE)
   ADD_DEFINITIONS(-DCONFFILES)
 ENDIF(LIBNFC_CONFFILES_MODE)
 
-option (BUILD_EXAMPLES "build examples ON/OFF" ON)
-option (BUILD_UTILS "build utils ON/OFF" ON)
+option (BUILD_EXAMPLES "build examples ON/OFF" OFF)
+option (BUILD_UTILS "build utils ON/OFF" OFF)
 
 option (BUILD_DEBPKG "build debian package ON/OFF" OFF)
 
@@ -130,7 +130,7 @@ IF(NOT WIN32)
   # Set some pkg-config variables
   SET(prefix ${CMAKE_INSTALL_PREFIX})
   SET(exec_prefix ${CMAKE_INSTALL_PREFIX})
-  SET(PACKAGE "libnfc")
+  SET(PACKAGE "libnfc-ng")
   IF(LIBNFC_DRIVER_PN53X_USB)
     SET(PKG_REQ ${PKG_REQ} "libusb")
   ENDIF(LIBNFC_DRIVER_PN53X_USB)
@@ -145,8 +145,8 @@ IF(NOT WIN32)
   ENDIF(LIBNFC_DRIVER_ACR122_PCSC)
   # CMake lists are separated by a semi colon, replace with colon
   STRING(REPLACE ";" "," PKG_CONFIG_REQUIRES "${PKG_REQ}")
-  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libnfc.pc.in ${CMAKE_CURRENT_BINARY_DIR}/libnfc.pc @ONLY) 
-  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/libnfc.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+  CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/libnfc-ng.pc.in ${CMAKE_CURRENT_BINARY_DIR}/libnfc-ng.pc @ONLY)
+  INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/libnfc-ng.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 ENDIF(NOT WIN32)
 
 INCLUDE(LibnfcDrivers)
@@ -185,7 +185,7 @@ IF(WIN32)
   SET(prefix ${CMAKE_INSTALL_PREFIX})
   SET(RC_COMMENT "${PACKAGE_NAME} library")
   SET(RC_INTERNAL_NAME "${PACKAGE_NAME} ${WIN32_MODE}")
-  SET(RC_ORIGINAL_NAME ${PACKAGE_NAME}.dll)
+  SET(RC_ORIGINAL_NAME "libnfcng.dll")
   # RC_FILE_TYPE: VFT_DLL
   SET(RC_FILE_TYPE 0x00000002L)
   CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/contrib/win32/version.rc.in ${CMAKE_CURRENT_BINARY_DIR}/windows/libnfc.rc @ONLY)
@@ -205,13 +205,13 @@ endif ()
 if (NOT MSVC)
   # config script install path
   if ( NOT DEFINED LIBNFC_CMAKE_CONFIG_DIR )
-    set ( LIBNFC_CMAKE_CONFIG_DIR lib${LIB_SUFFIX}/cmake/libnfc )
+    set ( LIBNFC_CMAKE_CONFIG_DIR lib${LIB_SUFFIX}/cmake/libnfc-ng )
   endif ()
 
-  set ( LIBNFC_INCLUDE_DIR ${includedir} )
+  set ( LIBNFC_INCLUDE_DIR ${includedir}/libnfc-ng )
   set ( LIBNFC_INCLUDE_DIRS ${LIBNFC_INCLUDE_DIR} )
   list ( APPEND LIBNFC_INCLUDE_DIRS ${LIBUSB_INCLUDE_DIRS} )
-  set ( LIBNFC_LIBRARY nfc )
+  set ( LIBNFC_LIBRARY nfcng )
   set ( LIBNFC_LIBRARIES ${LIBNFC_LIBRARY} )
   list ( APPEND LIBNFC_LIBRARIES ${LIBUSB_LIBRARIES} )
   set ( LIBNFC_LIBRARY_DIRS ${libdir} )
@@ -224,7 +224,7 @@ if (NOT MSVC)
   set ( LIBNFC_USE_FILE ${CMAKE_INSTALL_PREFIX}/${LIBNFC_CMAKE_CONFIG_DIR}/UseLibNFC.cmake )
 
 
-          
+
   if(CMAKE_VERSION VERSION_LESS 2.8.8)
     configure_file ( cmake/LibNFCConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/LibNFCConfig.cmake @ONLY )
     configure_file ( cmake/LibNFCConfigVersion.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/LibNFCConfigVersion.cmake @ONLY )
@@ -243,18 +243,18 @@ if (NOT MSVC)
         NO_CHECK_REQUIRED_COMPONENTS_MACRO
     )
     write_basic_package_version_file (
-      LibNFCConfigVersion.cmake 
-      VERSION ${LIBNFC_VERSION_STRING} 
+      LibNFCConfigVersion.cmake
+      VERSION ${LIBNFC_VERSION_STRING}
       COMPATIBILITY AnyNewerVersion
     )
   endif ()
-   
+
   install ( FILES ${CMAKE_CURRENT_BINARY_DIR}/LibNFCConfig.cmake
                   ${CMAKE_CURRENT_BINARY_DIR}/LibNFCConfigVersion.cmake
                   cmake/UseLibNFC.cmake
             DESTINATION ${LIBNFC_CMAKE_CONFIG_DIR}
           )
-   
+
 endif ()
 
 # Binary Package
@@ -279,7 +279,7 @@ ELSE(WIN32)
 ENDIF(WIN32)
 
 SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
-SET(CPACK_PACKAGE_INSTALL_DIRECTORY "libnfc")
+SET(CPACK_PACKAGE_INSTALL_DIRECTORY "libnfc-ng")
 SET(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
 SET(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})
 SET(CPACK_PACKAGE_VERSION_PATCH ${VERSION_PATCH})
@@ -302,6 +302,6 @@ ELSE(WIN32)
   SET(CPACK_SOURCE_GENERATOR "ZIP;TBZ2")
 ENDIF(WIN32)
 
-SET(CPACK_SOURCE_PACKAGE_FILE_NAME "libnfc-${VERSION}")
+SET(CPACK_SOURCE_PACKAGE_FILE_NAME "libnfc-ng-${VERSION}")
 SET(CPACK_SOURCE_IGNORE_FILES "~$" "/\\\\.git/" "bin/")
 INCLUDE(CPack)
