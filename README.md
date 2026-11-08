@@ -1,3 +1,5 @@
+> This is the **libnfc-ng** fork used by [NFC Foundry](https://github.com/YangtseSu/nfc-foundry): it keeps the upstream C API but installs `libnfcng.so.6` with its own headers and pkg-config file, selects the device through `LIBNFC_DEVICE` instead of the conffiles, and installs no command-line utilities. See [FORK.md](FORK.md) for the full change list.
+
 ```
 *-
 * Free/Libre Near Field Communication (NFC) library
